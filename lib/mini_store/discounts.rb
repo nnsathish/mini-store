@@ -10,6 +10,7 @@ module MiniStore
       klass.new(discount)
     end
 
+    # Cleanup: Move to seperate files when they tend to grow
     class Base
       attr_reader :discount
 

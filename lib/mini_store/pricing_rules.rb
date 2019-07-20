@@ -14,6 +14,7 @@ module MiniStore
       const_get(rule_class).new(rule)
     end
 
+    # Cleanup: Move to seperate files when they tend to grow
     class Base
       attr_reader :value, :discount
 
