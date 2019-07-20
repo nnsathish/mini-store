@@ -1,8 +1,9 @@
 require "json"
+require "mini_store/pricing_rules"
 
 module MiniStore
   class Product
-    attr_reader :code, :name, :price, :quantity
+    attr_reader :code, :name, :price, :quantity, :pricing_rule
 
     DATA_PATH = File.join(
       File.dirname(__dir__), "../data", 'products.json'
@@ -33,49 +34,23 @@ module MiniStore
       self.all_by_code[code.to_sym].dup
     end
 
+    def set_pricing_rule!(rule)
+      @pricing_rule = PricingRules.for(rule)
+    end
+
     def increment_quantity!
       @quantity += 1
     end
 
-    def discounted_price(pricing_rule = nil)
-      pricing_rule ||= {}
-      return total_price unless valid_pricing_rule?(pricing_rule)
+    def rule_price
+      return total_price unless @pricing_rule
 
-      discount = compute_discount(pricing_rule)
+      discount = @pricing_rule.compute_discount(self)
       total_price - discount
     end
 
     def total_price
       self.price * self.quantity
-    end
-
-    private
-
-    # EnhancementTip: Can be refactored when we add a PricingRule class
-    def valid_pricing_rule?(rule)
-      !((rule[:every] || rule[:min]) && rule[:discount]).nil?
-    end
-
-    # ideally, should be delegated to Discounts::Every or Discounts::Min
-    def compute_discount(rule)
-      factor = discount_factor(rule)
-
-      if rule[:every].to_i > 0
-        (self.quantity / rule[:every].to_i) * factor
-      elsif rule[:min].to_i <= self.quantity
-        self.quantity * factor
-      else
-        0.0
-      end
-    end
-
-    def discount_factor(rule)
-      case rule[:discount]
-      when /\A\d+%\Z/
-        self.price * (rule[:discount].to_i / 100.0)
-      else
-        rule[:discount].to_i
-      end
     end
   end
 end

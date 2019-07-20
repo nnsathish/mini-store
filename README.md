@@ -28,7 +28,7 @@ To execute sample test cases, run:
 For customized testing:
 
 ```ruby
-pricing_rules = { VOUCHER: { every: 2, discount: '100%' }, TSHIRT: { min: 3, discount: 1 } }
+pricing_rules = { VOUCHER: { type: :every, value: 2, discount: '100%' }, TSHIRT: { type: :min, value: 3, discount: 1 } }
 co = MiniStore::Checkout.new(pricing_rules)
 co.scan('VOUCHER')
 co.scan("VOUCHER")

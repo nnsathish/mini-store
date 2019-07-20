@@ -5,13 +5,12 @@ module MiniStore
     attr_reader :pricing_rules, :products
 
     DEFAULT_PRICING_RULES = {
-      VOUCHER: { every: 2, discount: '100%' },
-      TSHIRT: { min: 3, discount: 1 }
+      VOUCHER: { type: :every, value: 2, discount: '100%' },
+      TSHIRT: { type: :min, value: 3, discount: 1 }
     }.freeze
 
     def initialize(pricing_rules = nil)
       @pricing_rules = pricing_rules || DEFAULT_PRICING_RULES
-      # parse_pricing_rules
       @products = {}
     end
 
@@ -23,9 +22,8 @@ module MiniStore
 
     def total
       @total ||= begin
-        @products.sum do |code, product|
-          pricing_rule = @pricing_rules[code.to_sym]
-          product.discounted_price(pricing_rule)
+        @products.sum do |_, product|
+          product.rule_price
         end
       end
     end
@@ -36,6 +34,7 @@ module MiniStore
       if @products[product.code]
         @products[product.code].increment_quantity!
       else
+        product.set_pricing_rule!(@pricing_rules[product.code.to_sym])
         @products[product.code] = product
       end
       @total = nil # recompute total
