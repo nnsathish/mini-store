@@ -21,6 +21,12 @@ Or install it yourself as:
 
 ## Usage
 
+To execute sample test cases, run:
+
+    $ bin/mini_store
+
+For customized testing:
+
 ```ruby
 pricing_rules = { VOUCHER: { every: 2, discount: '100%' }, TSHIRT: { min: 3, discount: 1 } }
 co = MiniStore::Checkout.new(pricing_rules)

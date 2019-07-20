@@ -7,4 +7,5 @@ Assumptions:
 * Pricing Rules input(OPTIONAL) is supplied in either of the specified format
   'CODE': { min: x, discount: x }
   'CODE': { every: 2, discount: x }
+* Maximum of One pricing rule per product
 * Discount can be fixed(0 to price) or percentage(0 to 100)

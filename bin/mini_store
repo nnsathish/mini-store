@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "mini_store"
+
+examples = [
+  %w[VOUCHER TSHIRT MUG],
+  %w[VOUCHER TSHIRT VOUCHER],
+  %w[TSHIRT TSHIRT TSHIRT VOUCHER TSHIRT],
+  %w[VOUCHER TSHIRT VOUCHER VOUCHER MUG TSHIRT TSHIRT]
+]
+
+examples.each_with_index do |codes, i|
+  puts "Running Example #{i+1}:"
+  co = MiniStore::Checkout.new
+  codes.each { |code| co.scan(code) }
+  puts "Items: #{codes.join(', ')}"
+  puts "Total: #{co.total}\n\n"
+end
+
+puts 'Completed'
