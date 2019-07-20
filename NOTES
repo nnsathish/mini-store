@@ -1,0 +1,10 @@
+Assumptions:
+
+* Products information will be supplied via a valid JSON file (Sample: products.json)
+* Prices are positive float numbers.
+* Currency is Euros by default
+* Stock management or product availability check isn't part of the scope
+* Pricing Rules input(OPTIONAL) is supplied in either of the specified format
+  'CODE': { min: x, discount: x }
+  'CODE': { every: 2, discount: x }
+* Discount can be fixed(0 to price) or percentage(0 to 100)

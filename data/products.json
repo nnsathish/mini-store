@@ -1,0 +1,17 @@
+[
+  {
+    "code": "VOUCHER",
+    "name": "NoviCap Voucher",
+    "price": 5.0
+  },
+  {
+    "code": "TSHIRT",
+    "name": "NoviCap T-Shirt",
+    "price": 20.0
+  },
+  {
+    "code": "MUG",
+    "name": "NoviCap Coffee Mug",
+    "price": 7.5
+  }
+]
