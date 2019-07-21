@@ -43,9 +43,9 @@ module MiniStore
     end
 
     def rule_price
-      return total_price unless @pricing_rule
+      return total_price unless self.pricing_rule
 
-      discount = @pricing_rule.compute_discount(self)
+      discount = self.pricing_rule.compute_discount(self)
       total_price - discount
     end
 

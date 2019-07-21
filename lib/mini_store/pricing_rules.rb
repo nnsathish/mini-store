@@ -24,7 +24,7 @@ module MiniStore
       end
 
       def compute_discount(product)
-        discount_factor = @discount.factor(product)
+        discount_factor = self.discount.factor(product)
         self.factor(product) * discount_factor
       end
     end

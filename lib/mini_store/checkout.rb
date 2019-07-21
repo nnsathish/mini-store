@@ -22,7 +22,7 @@ module MiniStore
 
     def total
       @total ||= begin
-        @products.sum do |_, product|
+        self.products.sum do |_, product|
           product.rule_price
         end
       end
@@ -31,11 +31,11 @@ module MiniStore
     private
 
     def add_product(product)
-      if @products[product.code]
-        @products[product.code].increment_quantity!
+      if self.products[product.code]
+        self.products[product.code].increment_quantity!
       else
-        product.set_pricing_rule!(@pricing_rules[product.code.to_sym])
-        @products[product.code] = product
+        product.set_pricing_rule!(self.pricing_rules[product.code.to_sym])
+        self.products[product.code] = product
       end
       @total = nil # recompute total
     end
