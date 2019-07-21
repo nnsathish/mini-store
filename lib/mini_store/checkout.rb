@@ -34,10 +34,13 @@ module MiniStore
       if self.products[product.code]
         self.products[product.code].increment_quantity!
       else
-        product.set_pricing_rule!(self.pricing_rules[product.code.to_sym])
+        price_rule = self.pricing_rules[product.code.to_sym]
+        product.set_pricing_rule!(price_rule)
         self.products[product.code] = product
       end
+
       @total = nil # recompute total
+      self.products[product.code]
     end
   end
 end
